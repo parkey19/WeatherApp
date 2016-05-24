@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">
+    <link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Roboto:100,300,700,400' type='text/css'>
+    <link rel="stylesheet" href='https://cdnjs.cloudflare.com/ajax/libs/weather-icons/1.3.2/css/weather-icons.min.css' type='text/css'>
+    <link rel="stylesheet" href="body.css">
+  <title>Weather App</title>
+    
+    
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="header text-center">
+        <h1>Weather App</h1>
+    </div>
+    <div class="row">
+
+        <div class="col-xs-8 col-xs-offset-2">
+            <div class="text-center status">
+                <p class="text-center city"></p>
+                <p class="text-center temperature"></p>
+                <p class="text-center description"></p>
+                <!--<p>{{Data.des}}</p>-->
+            </div>
+
+            <div class="text-center all-icon">
+                <div class="icon sun-shower hide ">
+                    <div class="cloud"></div>
+                    <div class="sun">
+                        <div class="rays"></div>
+                    </div>
+                    <div class="rain"></div>
+                </div>
+                <div class="icon thunder-storm hide thunderstom">
+                    <div class="cloud"></div>
+                    <div class="lightning">
+                        <div class="bolt"></div>
+                        <div class="bolt"></div>
+                    </div>
+                </div>
+                <div class="icon cloudy hide clouds">
+                    <div class="cloud"></div>
+                    <div class="cloud"></div>
+                </div>
+                <div class="icon flurries hide snow">
+                    <div class="cloud"></div>
+                    <div class="snow">
+                        <div class="flake"></div>
+                        <div class="flake"></div>
+                    </div>
+                </div>
+                <div class="icon sunny hide clear">
+                    <div class="sun">
+                        <div class="rays"></div>
+                    </div>
+                </div>
+                <div class="icon rainy hide rain">
+                    <div class="cloud"></div>
+                    <div class="rain"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="https://code.jquery.com/jquery-1.12.3.min.js"   integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ="   crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    var apiObj = (function () {
+        'use strict';
+
+        var appId = '5459ea73885c6ddfa8bda46b9f422db7';
+        var getIpInfo = "http://ipinfo.io";
+        var url = "http://api.openweathermap.org/data/2.5/weather?units=metric&lat=";
+        var lat = 0.0;
+        var long = 0.0;
+
+        var init = function () {
+            $.getJSON(getIpInfo, function (json) {
+                console.log(json.loc);
+                var loc = json.loc.split(",");
+                lat = loc[0];
+                long =loc[1];
+                getJSON();
+            });
+        }
+        var getJSON = function () {
+            console.log(getUrl());
+            $.getJSON(getUrl(), function (json) {
+                console.log(json);
+                var temp =Math.round(json.main.temp) + " &#176;C";
+                 $(".city").html(json.name);
+                 $(".temperature").html(temp);
+                 $(".main").html(json.weather[0].main);
+                $(".description").html(json.weather[0].description);
+                setCloud(json.weather[0].description);
+                 //$(".cloud").html(json.weather[0].description);
+            });
+        }
+
+        var setCloud = function(description){
+            description = description.toLowerCase();
+            switch (description) {
+                case 'dizzle':
+                    addIcon(description);
+                    break;
+                case 'clouds':
+                    addIcon(description)
+                    break;
+                case 'rain':
+                    addIcon(description)
+                    break;
+                case 'snow':
+                    addIcon(description)
+                    break;
+                case 'clear':
+                    addIcon(description)
+                    break;
+                case 'thunderstom':
+                    addIcon(description)
+                    break;
+                default:
+                    $('div.clouds').removeClass('hide');
+            }
+
+        }
+
+     var addIcon = function(addIcon){
+         $('div.' + addIcon).removeClass('hide');
+     }
+
+         var getUrl = function () {
+             return url + lat + "&lon=" + long + "&appid=" + appId;
+         }
+
+         return {
+            init: init
+         };
+
+        })();
+
+    apiObj.init();
+</script>
+</body>
+</html>

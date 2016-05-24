@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+  <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">
+
+    <style>
+        body {
+            padding-top: 10%;
+            padding-left: 25%;
+            padding-right: 25%;
+            padding-bottom: 20px;
+        }
+    </style>
+  <title>quoteMachine</title>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="jumbotron">
+        <blockquote>
+            <p id="quote-contents">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+            <footer id="cite"> </footer>
+        </blockquote>
+        <div class="row">
+            <div class="col-xs-4">
+                <a class="btn btn-primary btn-lg" id="tweet-quote" title="Tweet this quote!" target="_blank" href="#">
+                    <i class="fa fa-twitter"></i>
+                </a>
+                <a class="btn btn-primary btn-lg" id="facebook-quote" title="Tweet this quote!" target="_blank" href="#">
+                    <i class="fa fa-tumblr"></i>
+                </a>
+            </div>
+            <div class="col-xs-4 col-xs-offset-4">
+                <a id="newQuote" class="btn btn-primary btn-lg" href="#" role="button">New Quote</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-1.12.3.min.js"   integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ="   crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+
+    var quoteArr = [["a","1"],["a","2"],["a","3"],["a","4"],["a","5"],["a","6"]];
+
+    $(document).ready(function() {
+
+
+    });
+
+    $('#newQuote').on("click", function(){
+        var redVal=randomRange(0,255);
+        var greenVal=randomRange(0,255);
+        var blueVal=randomRange(0,255);
+        $(document.body).css("background-color", "rgb(" +redVal+ "," + greenVal + "," + blueVal + ")");
+
+        var randomNum = randomRange(0, quoteArr.length-1);
+
+        $('#quote-contents').html(quoteArr[randomNum][0]);
+        $('#cite').html(quoteArr[randomNum][1]);
+    });
+
+    function randomRange(min, max) {
+
+        return Math.floor(Math.random() * (max - min + 1)) + min; // Change this line
+
+    }
+
+
+
+</script>
+</body>
+</html>
